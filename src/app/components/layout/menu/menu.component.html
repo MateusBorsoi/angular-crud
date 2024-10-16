@@ -1,9 +1,9 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" class="sidenav">
     <mat-nav-list>
-      <a mat-list-item href="#">Item 1</a>
-      <a mat-list-item href="#">Item 2</a>
-      <a mat-list-item href="#">Item 3</a>
+      <ng-container *ngFor="let route of routes; trackBy:trackByFn">
+      <a mat-list-item [href]="route.path">{{route.title}}</a>
+    </ng-container>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -20,8 +20,7 @@
     </mat-toolbar>
 
     <div class="content">
-      <h1>Bem-vindo ao meu aplicativo!</h1>
-      <p>Conteúdo principal vai aqui.</p>
+      <router-outlet/>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
