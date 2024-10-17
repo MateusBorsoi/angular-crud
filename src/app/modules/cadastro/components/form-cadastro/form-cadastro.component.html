@@ -1,3 +1,41 @@
-<mat-card appearance="outlined">
-    <mat-card-content>Simple card</mat-card-content>
-</mat-card>
+
+<form [formGroup]="_formCadastro" (ngSubmit)="onSubmit()">
+  <mat-grid-list cols="1" rowHeight="80px" class="list-form">
+    <mat-grid-tile colspan="1" rowspan="1">
+        <mat-form-field appearance="fill" >
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" placeholder="Informe o nome" />
+        <mat-error *ngIf="getErrorMessage('name')">{{ getErrorMessage('name') }}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" placeholder="Informe seu e-mail" />
+        <mat-error *ngIf="getErrorMessage('email')">{{ getErrorMessage('email') }}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="password" placeholder="Informe a senha" type="password"/>
+        <mat-error *ngIf="getErrorMessage('password')">{{ getErrorMessage('password') }}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+      <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Confirmar senha</mat-label>
+        <input matInput formControlName="confirmPassword" placeholder="Confirmar senha" type="password"/>
+        <mat-error *ngIf="getErrorMessage('confirmPassword')">{{ getErrorMessage('confirmPassword') }}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <section>
+      <button mat-raised-button color="primary" type="submit" [disabled]="_formCadastro.invalid">
+        Enviar
+      </button>
+    </section>
+    </mat-grid-tile>
+  </mat-grid-list>
+ 
+</form>

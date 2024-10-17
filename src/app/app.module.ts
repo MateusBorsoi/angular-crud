@@ -11,6 +11,7 @@ import { MenuComponent } from './components/layout/menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; //
 import { RoutingModule } from './modules/routes/router/routing.module';
 import { CadastroModule } from './modules/cadastro/cadastro.module';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [MenuComponent, AppComponent],
   imports: [
@@ -24,6 +25,7 @@ import { CadastroModule } from './modules/cadastro/cadastro.module';
     MatSidenavModule,
     MatListModule,
     RoutingModule,
+    HttpClientModule 
   ],
   bootstrap: [AppComponent],
 })
