@@ -18,5 +18,9 @@ export class MenuComponent {
       title: `Cadastro`,
       path: '/cadastro',
     },
+    {
+      title: 'Usuários',
+      path: '/users',
+    },
   ];
 }

@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { RoutingModule } from './modules/routes/router/routing.module';
 import { CadastroModule } from './modules/cadastro/cadastro.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UsersModule } from './modules/users/users.module';
 @NgModule({
   declarations: [MenuComponent, AppComponent],
   imports: [
@@ -19,13 +20,14 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatIconModule,
     CadastroModule,
+    UsersModule,
     MatButtonModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     RoutingModule,
-    HttpClientModule 
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
 })

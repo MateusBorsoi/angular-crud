@@ -88,9 +88,14 @@ export class FormCadastroComponent {
       this._cadastroService.createUser(user).subscribe({
         next: (response) => {
           this._snackBar.open('Cadastro realizado com sucesso', 'Fechar');
+          this._formCadastro.reset();
+          
         },
         error: (err) => {
-          this._snackBar.open('Falha ao cadastrar usuário', 'Fechar');
+          this._snackBar.open(
+            'Falha ao cadastrar usuário, motivo:' + err.message,
+            'Fechar'
+          );
         },
       });
     }
