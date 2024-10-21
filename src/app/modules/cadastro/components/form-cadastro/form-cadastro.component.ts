@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,13 +9,20 @@ import { passwordMismatchValidator } from '../../../../../utils/form';
 import { CadastroService } from '../../../../services/cadastro/cadastro.service';
 import { IUser } from '../../../../services/cadastro/interface/IUser.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-form-cadastro',
   templateUrl: './form-cadastro.component.html',
   styleUrl: './form-cadastro.component.scss',
 })
-export class FormCadastroComponent {
+export class FormCadastroComponent implements OnInit, OnDestroy {
+  @Input() isEditing!: boolean;
+  @Input() userToEdit!: number;
+
   _formCadastro: FormGroup;
+
+  private userSubscription: Subscription | null = null;
 
   public validationMessages: ValidationErrors = {
     name: {
@@ -38,7 +45,8 @@ export class FormCadastroComponent {
   constructor(
     private _fb: FormBuilder,
     private _cadastroService: CadastroService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router
   ) {
     this._formCadastro = this._fb.group(
       {
@@ -52,6 +60,20 @@ export class FormCadastroComponent {
       }
     );
   }
+
+  ngOnInit(): void {
+    if (this.isEditing) {
+      this.userSubscription = this._cadastroService
+        .getUserById(this.userToEdit)
+        .subscribe({
+          next: (response) => {
+            this._formCadastro.patchValue(response);
+          },
+        });
+    }
+  }
+
+  ngOnDestroy(): void {}
 
   getErrorMessage(controlName: string): string | null {
     const control = this._formCadastro.get(controlName);
@@ -85,6 +107,21 @@ export class FormCadastroComponent {
         name: this._formCadastro.get('name')?.value,
         password: this._formCadastro.get('password')?.value,
       };
+      if (this.isEditing) {
+        this._cadastroService.updateUser(this.userToEdit, user).subscribe({
+          next: (response) => {
+            this._snackBar.open('Cadastro atualizado com sucesso', 'Fechar');
+            window.location.reload()
+          },
+          error: (err) => {
+            this._snackBar.open(
+              'Falha ao atualizar usuário, motivo:' + err.message,
+              'Fechar'
+            );
+          },
+        });
+        return;
+      }
       this._cadastroService.createUser(user).subscribe({
         next: (response) => {
           this._snackBar.open('Cadastro realizado com sucesso', 'Fechar');

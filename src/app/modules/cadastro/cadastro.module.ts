@@ -18,6 +18,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatGridListModule,
     MatButtonModule,
   ],
-  exports: [CadastroComponent],
+  exports: [CadastroComponent, FormCadastroComponent],
 })
 export class CadastroModule {}

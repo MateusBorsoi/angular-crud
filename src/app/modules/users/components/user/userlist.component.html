@@ -1,11 +1,31 @@
-<mat-list>
+<section>
+  <ng-container *ngIf="editUser$ | async as isEditing; else isView">
+    <ng-container *ngIf="userId$ | async as userToEdit">
+    <app-form-cadastro [isEditing]="isEditing" [userToEdit]="userToEdit"/>
+  </ng-container>
+  </ng-container>
+
+  <ng-template #isView>
+  <mat-list>
     <ng-container *ngFor="let item of users(); trackBy: trackBy">
-      <mat-list-item>
-        <h3 matListItemTitle>{{item.name}}</h3>
-        <p matListItemLine>
-          <span>{{item.email}}</span>
-        </p>
-      </mat-list-item>
+      <mat-list-item class="list-item-container">
+        <section class="userinfo-container">
+          <div class="user-data">
+            <h3 matListItemTitle>{{item.name}}</h3>
+            <p matListItemLine>
+            <span>{{item.email}}</span>
+           </p>
+          </div>
+          <div class="button-container">
+          <button mat-fab aria-label="Example icon button with a delete icon" (click)="changeEdit({isEdit:true, userId:item.id ?? null})">
+            <mat-icon>edit</mat-icon>
+          </button>
+          </div>
+        </section>
+     </mat-list-item>
+     <mat-divider/>
     </ng-container>
-    
   </mat-list>
+</ng-template>
+
+</section>
